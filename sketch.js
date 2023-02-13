@@ -22,6 +22,7 @@ Code        |	Description
 95 *	      |   Thunderstorm: Slight or moderate
 96, 99 *	  |  Thunderstorm with slight and heavy hail
  */
+let canvas;
 
 let weatherData;
 const api = 'https://archive-api.open-meteo.com/v1/archive?';
@@ -65,7 +66,10 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(720, 1280);
+  canvas = createCanvas(720, 1280);
+  canvas.parent("sketch-container"); //move our canvas inside this HTML element
+  document.oncontextmenu = () => false;
+
 
   numOfVisibleData = 50;
   offsetX = width / numOfVisibleData;
@@ -80,9 +84,15 @@ function setup() {
   weatherAsk(); // API data request
 }
 
-/// video
+function windowResized() {
 
-/// end video
+  if (windowWidth < 600) {
+    resizeCanvas(windowWidth, windowWidth);
+  } else if (canvas.width != 600) {
+    resizeCanvas(600, 600);
+  }
+  offsetX = width / numOfVisibleData;
+}
 
 function draw() {
   if (latency) { // if the system is slow
@@ -99,7 +109,7 @@ function draw() {
     displayTextData();
 
     // display visuals
-    displayVisualData()
+    displayVisualData();
 
     // display and update particles
     emitter.update();
@@ -457,19 +467,19 @@ function displayTextData() {
 */
 function displayVisualData() {
   stroke(0);
-  line(0, height - 400, width, height - 400);
+  line(0, height - height/3, width, height -  height/3);
   for (let i = 0; i < numOfVisibleData; i++) {
     const thisIndex = (i + counter) % weatherStates.length;
 
     // temperatures
-    let yAmp = map(amps[thisIndex], 0, 1, height - 100, height - 400);
+    let yAmp = map(amps[thisIndex], 0, 1, height - height/13, height - height/3);
     stroke(255);
     strokeWeight(5);
     point(i * offsetX, yAmp);
 
     // notes
     stroke(255, 0, 0);
-    let yNote = map(weatherStates[thisIndex], 0, 6, height - 100, height - 400);
+    let yNote = map(weatherStates[thisIndex], 0, 6,height - height/13, height - height/3);
     point(i * offsetX, yNote);
   }
 }
