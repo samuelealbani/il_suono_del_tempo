@@ -7,13 +7,9 @@ canvas {
 }
 
 /* original aspect ratio width="640" height="360" */
+
 #sketch-container{
-  width: 100%;
-}
-.sketch-container{
   position: relative;
   width: 79%; /* adjust this and the padding-top to change how big it is*/
   height: 0;
-  padding-top: 45%; /* padding top is in reltation to the width of parent, it preserves aspect ratio*/
-  /* margin: 0 auto; */ /*this would center your video in the section container*/
 }

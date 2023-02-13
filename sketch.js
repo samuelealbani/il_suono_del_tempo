@@ -87,10 +87,8 @@ function setup() {
 function windowResized() {
 
   if (windowWidth < 600) {
-    resizeCanvas(windowWidth, windowWidth);
-  } else if (canvas.width != 600) {
-    resizeCanvas(600, 600);
-  }
+    resizeCanvas(windowHeight/1.77, windowHeight);
+  } 
   offsetX = width / numOfVisibleData;
 }
 
